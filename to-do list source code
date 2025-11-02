@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .body-dark{
+            background-color: blue;
+            color: aliceblue;
+        }
+        body{
+            color: aliceblue;
+            background-color: black;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>TODO APPLICATION</h1>
+    <div class="inputfield">
+        <form >
+            <input type="text" placeholder="enter item">
+            <button type="submit" onclick="clickevent(event)">ADD</button>
+        </form>
+        <div id="res">
+        </div>
+        <button id="theme" onclick="changeTheme()">change theme</button>
+    </div>
+
+    <script>
+        
+    function clickevent(e) {
+        var a = document.querySelector("input").value;
+        e.preventDefault();
+        var ele = document.createElement("h2");
+        ele.innerHTML=a+`<button onclick="delfunction(event)">DELETE</button>`;
+        var res = document.getElementById("res")
+        res.append(ele);
+    }
+   function delfunction(e) {
+     console.log(e.target);
+     e.target.parentElement.remove(); 
+   }
+   function changeTheme(){
+    var body = document.querySelector("body");
+    body.classList.toggle("body-dark")    
+   }
+    </script>
+</body>
+</html>
