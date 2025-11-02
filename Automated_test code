@@ -1,0 +1,96 @@
+package ledcode;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+public class todo {
+	public static void main(String[]args) throws InterruptedException, IOException
+	{
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("http://127.0.0.1:5500/index.html");
+		System.out.println("Page title :"+ driver.getTitle());
+		driver.manage().window().maximize();
+		Thread.sleep(2000);
+		
+		WebElement ele= driver.findElement(By.xpath("//input[@placeholder='enter item']"));
+		
+		String arr[]= {"trusyn","amw","smt"};
+		
+		for(int i=0;i<arr.length;i++)
+		{
+		ele.clear();	
+		ele.sendKeys(arr[i]);
+		
+		
+		WebElement ele1=driver.findElement(By.xpath("//button[text()='ADD']"));
+		ele1.click();
+
+		if(i==arr.length-1)
+		{
+			System.out.println("task added sucessfull");
+		}
+		Thread.sleep(3000);
+	    }
+		for(int i=0;i<2;i++)
+		{
+			
+		driver.findElement(By.xpath("//button[text()='DELETE']")).click();
+		 if(i==2-1)
+		 {
+			 System.out.println("element deleted sucessfully");
+		 }
+		}
+		System.out.println("checking theme function....");
+		try {
+			 WebElement themeButton = driver.findElement(By.id("theme"));
+		        Set<String> themeSet = new HashSet<>();
+
+		        
+		        WebElement body = driver.findElement(By.tagName("body"));
+		        String initialTheme = body.getAttribute("class");
+		        themeSet.add(initialTheme);
+
+		        for (int i = 0; i < 10; i++) { 
+		            themeButton.click();
+		            Thread.sleep(1000); 
+
+		            String currentTheme = body.getAttribute("class");
+		            if (themeSet.contains(currentTheme)) {
+		                break; 
+		            } else {
+		                themeSet.add(currentTheme);
+		            }
+		        }
+
+		       
+		        System.out.println("Total unique theme patterns: " + themeSet.size());
+
+		        System.out.println("The theme functionality working sucessfully");
+		        
+		}
+		catch(Exception e)
+		{
+			System.out.println("There is no functionaliy in to-do web application");
+		}
+		finally
+		{
+			File scr=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+			File dest=new File("./snaps/img.png");
+			FileHandler.copy(scr, dest);
+			System.out.println();
+			System.out.println("the testing of todo completed successfully");
+		}
+
+		Thread.sleep(2000);
+		driver.quit();
+	}
+
+}
